@@ -7,7 +7,7 @@ import NavbarComponent from "./components/Navbar";
 import WeekWeather from "./components/WeekWeather";
 
 function App() {
-  const [citta, setCitta] = useState("London");
+  const [citta, setCitta] = useState(null);
   const [datiMeteo, setDatiMeteo] = useState(null);
   const [forecast, setForecast] = useState(null);
   const [isDarkTheme, setIsDarkTheme] = useState(true);
