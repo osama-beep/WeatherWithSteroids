@@ -26,7 +26,7 @@ function NavbarComponent({
     >
       <Container fluid>
         <Navbar.Brand href="#" className="navbar-brand-custom">
-          MeteoEpico
+          EpiWeather
         </Navbar.Brand>
         <Navbar.Toggle aria-controls="navbarSupportedContent" />
         <Navbar.Collapse id="navbarSupportedContent">

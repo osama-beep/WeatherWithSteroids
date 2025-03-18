@@ -1,8 +1,14 @@
 import { useState, useEffect } from "react";
 import axios from "axios";
 import "./App.css";
-import { Container, Card, Row, Col, ListGroup } from "react-bootstrap";
-import { BsThermometerHalf, BsWind, BsDroplet, BsSun } from "react-icons/bs";
+import { Container, Card, Row, Col, ListGroup, Badge } from "react-bootstrap";
+import {
+  BsThermometerHalf,
+  BsWind,
+  BsDroplet,
+  BsSun,
+  BsGeoAlt,
+} from "react-icons/bs";
 import NavbarComponent from "./components/Navbar";
 import WeekWeather from "./components/WeekWeather";
 
@@ -67,75 +73,47 @@ function App() {
         isDarkTheme={isDarkTheme}
         toggleTheme={toggleTheme}
       />
-      <Container fluid className="p-3">
-        <Row>
-          <Col xs={12} md={4} lg={3} className="mb-3 d-none d-md-block">
-            <Card
-              className={
-                isDarkTheme ? "bg-secondary text-light" : "bg-light text-dark"
-              }
-            >
-              <Card.Body className="text-center">
-                {datiMeteo && (
-                  <>
-                    <img
-                      src={`http://openweathermap.org/img/wn/${datiMeteo.weather[0].icon}@4x.png`}
-                      alt={datiMeteo.weather[0].description}
-                      className="weather-icon mb-3"
-                      style={{ width: "200px", height: "200px" }}
-                    />
-                    <Card.Title className="fs-4">
-                      {new Date().toLocaleDateString("it-IT", {
-                        weekday: "long",
-                      })}
-                    </Card.Title>
-                    <Card.Text className="fs-5">
-                      {new Date().toLocaleTimeString("it-IT", {
-                        hour: "2-digit",
-                        minute: "2-digit",
-                      })}
-                    </Card.Text>
-                  </>
-                )}
-              </Card.Body>
-            </Card>
-          </Col>
-          <Col xs={12} md={8} lg={9}>
-            <Card
-              className={
-                isDarkTheme ? "bg-secondary text-light" : "bg-light text-dark"
-              }
-            >
-              <Card.Body>
-                {datiMeteo && (
-                  <Card
-                    className={
-                      isDarkTheme ? "bg-dark text-light" : "bg-white text-dark"
-                    }
-                  >
-                    <Card.Body>
-                      <Card.Title className="text-center mb-4">
-                        <h2>
-                          {datiMeteo.name}, {datiMeteo.sys.country}
-                        </h2>
-                      </Card.Title>
+      <Container fluid className="py-4">
+        <Row className="justify-content-center">
+          <Col xs={12} md={10} lg={8}>
+            {datiMeteo && (
+              <Card
+                className={`mb-4 shadow ${
+                  isDarkTheme ? "bg-secondary text-light" : "bg-white"
+                }`}
+              >
+                <Card.Body>
+                  <Row>
+                    <Col xs={12} md={6} className="text-center mb-3 mb-md-0">
+                      <img
+                        src={`http://openweathermap.org/img/wn/${datiMeteo.weather[0].icon}@4x.png`}
+                        alt={datiMeteo.weather[0].description}
+                        className="weather-icon mb-3"
+                        style={{ width: "150px", height: "150px" }}
+                      />
+                      <h2 className="display-4 mb-0">
+                        {Math.round(datiMeteo.main.temp)}°C
+                      </h2>
+                      <p className="lead">{datiMeteo.weather[0].description}</p>
+                    </Col>
+                    <Col xs={12} md={6}>
+                      <h3 className="mb-3">
+                        <BsGeoAlt className="me-2" />
+                        {datiMeteo.name}, {datiMeteo.sys.country}
+                      </h3>
                       <ListGroup variant="flush">
                         <ListGroup.Item
                           className={
-                            isDarkTheme
-                              ? "bg-dark text-light"
-                              : "bg-white text-dark"
+                            isDarkTheme ? "bg-secondary text-light" : ""
                           }
                         >
                           <BsThermometerHalf className="me-2" />
-                          <strong>Temperatura:</strong>{" "}
-                          {Math.round(datiMeteo.main.temp)}°C
+                          <strong>Percepita:</strong>{" "}
+                          {Math.round(datiMeteo.main.feels_like)}°C
                         </ListGroup.Item>
                         <ListGroup.Item
                           className={
-                            isDarkTheme
-                              ? "bg-dark text-light"
-                              : "bg-white text-dark"
+                            isDarkTheme ? "bg-secondary text-light" : ""
                           }
                         >
                           <BsWind className="me-2" />
@@ -143,9 +121,7 @@ function App() {
                         </ListGroup.Item>
                         <ListGroup.Item
                           className={
-                            isDarkTheme
-                              ? "bg-dark text-light"
-                              : "bg-white text-dark"
+                            isDarkTheme ? "bg-secondary text-light" : ""
                           }
                         >
                           <BsDroplet className="me-2" />
@@ -153,21 +129,21 @@ function App() {
                         </ListGroup.Item>
                         <ListGroup.Item
                           className={
-                            isDarkTheme
-                              ? "bg-dark text-light"
-                              : "bg-white text-dark"
+                            isDarkTheme ? "bg-secondary text-light" : ""
                           }
                         >
                           <BsSun className="me-2" />
-                          <strong>Condizioni:</strong>{" "}
-                          {datiMeteo.weather[0].description}
+                          <strong>Indice UV:</strong>{" "}
+                          <Badge bg="warning" text="dark">
+                            Moderato
+                          </Badge>
                         </ListGroup.Item>
                       </ListGroup>
-                    </Card.Body>
-                  </Card>
-                )}
-              </Card.Body>
-            </Card>
+                    </Col>
+                  </Row>
+                </Card.Body>
+              </Card>
+            )}
             {forecast && (
               <WeekWeather forecast={forecast} isDarkTheme={isDarkTheme} />
             )}
